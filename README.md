@@ -4,4 +4,4 @@ This plugin provides automatic commenting/uncommenting for micro.
 
 Install with `> plugin install comment`.
 
-See the docs for more details.
+See the [docs](https://github.com/micro-editor/comment-plugin/blob/master/help/comment.md) for more details.
