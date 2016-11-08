@@ -1,4 +1,4 @@
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 ft = {}
 
@@ -67,3 +67,5 @@ end
 
 MakeCommand("comment", "comment.comment")
 BindKey("Alt-/", "comment.comment")
+
+AddRuntimeFile("comment", "help", "help/comment-plugin.md")
