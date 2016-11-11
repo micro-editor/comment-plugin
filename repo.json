@@ -4,8 +4,8 @@
   "Tags": ["comment", "uncomment"],
   "Versions": [
     {
-      "Version": "1.0.1",
-      "Url": "https://github.com/micro-editor/comment-plugin/archive/v1.0.1.zip",
+      "Version": "1.0.2",
+      "Url": "https://github.com/micro-editor/comment-plugin/archive/v1.0.2.zip",
       "Require": {
         "micro": ">=1.1.0"
       }

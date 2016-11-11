@@ -1,4 +1,4 @@
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 
 ft = {}
 
@@ -17,20 +17,24 @@ ft["d"] = "// %s"
 ft["swift"] = "// %s"
 
 function onViewOpen(v)
-    if v.Buf.Settings["commenttype"] == nil then
-        if ft[v.Buf.Settings["filetype"]] ~= nil then
-            v.Buf.Settings["commenttype"] = ft[v.Buf.Settings["filetype"]]
-        else
-            v.Buf.Settings["commenttype"] = "/* %s */"
-        end
+    if ft[v.Buf.Settings["filetype"]] ~= nil then
+        v.Buf.Settings["commenttype"] = ft[v.Buf.Settings["filetype"]]
+    elseif v.Buf.Settings["commenttype"] == nil or v.Buf.Settings["commenttype"] == "" then
+        v.Buf.Settings["commenttype"] = ""
     end
 end
 
 function commentLine(lineN)
     local v = CurView()
+    if ft[v.Buf.Settings["filetype"]] ~= nil then
+        v.Buf.Settings["commenttype"] = ft[v.Buf.Settings["filetype"]]
+    elseif v.Buf.Settings["commenttype"] == nil or v.Buf.Settings["commenttype"] == "" then
+        v.Buf.Settings["commenttype"] = ""
+        return
+    end
     local line = v.Buf:Line(lineN)
     local commentType = v.Buf.Settings["commenttype"]
-    local commentRegex = commentType:gsub("%*", "%*"):gsub("%-", "%-"):gsub("%.", "%."):gsub("%+", "%+"):gsub("%[", "%["):gsub("%%s", "(.*)")
+    local commentRegex = commentType:gsub("%*", "%*"):gsub("%-", "%-"):gsub("%.", "%."):gsub("%+", "%+"):gsub("%[", "%["):gsub(".?%%s", "%s*(.*)")
     if string.match(line, commentRegex) then
         uncommentedLine = string.match(line, commentRegex)
         v.Buf:Replace(Loc(0, lineN), Loc(#line, lineN), GetLeadingWhitespace(line) .. uncommentedLine)
