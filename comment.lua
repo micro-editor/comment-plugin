@@ -1,4 +1,4 @@
-VERSION = "1.0.2"
+VERSION = "1.0.1"
 
 ft = {}
 
@@ -17,24 +17,20 @@ ft["d"] = "// %s"
 ft["swift"] = "// %s"
 
 function onViewOpen(v)
-    if ft[v.Buf.Settings["filetype"]] ~= nil then
-        v.Buf.Settings["commenttype"] = ft[v.Buf.Settings["filetype"]]
-    elseif v.Buf.Settings["commenttype"] == nil or v.Buf.Settings["commenttype"] == "" then
-        v.Buf.Settings["commenttype"] = ""
+    if v.Buf.Settings["commenttype"] == nil then
+        if ft[v.Buf.Settings["filetype"]] ~= nil then
+            v.Buf.Settings["commenttype"] = ft[v.Buf.Settings["filetype"]]
+        else
+            v.Buf.Settings["commenttype"] = "/* %s */"
+        end
     end
 end
 
 function commentLine(lineN)
     local v = CurView()
-    if ft[v.Buf.Settings["filetype"]] ~= nil then
-        v.Buf.Settings["commenttype"] = ft[v.Buf.Settings["filetype"]]
-    elseif v.Buf.Settings["commenttype"] == nil or v.Buf.Settings["commenttype"] == "" then
-        v.Buf.Settings["commenttype"] = ""
-        return
-    end
     local line = v.Buf:Line(lineN)
     local commentType = v.Buf.Settings["commenttype"]
-    local commentRegex = commentType:gsub("%*", "%*"):gsub("%-", "%-"):gsub("%.", "%."):gsub("%+", "%+"):gsub("%[", "%["):gsub(".?%%s", "%s*(.*)")
+    local commentRegex = "^%s*" .. commentType:gsub("%*", "%*"):gsub("%-", "%-"):gsub("%.", "%."):gsub("%+", "%+"):gsub("%[", "%["):gsub("%%s", "(.*)")
     if string.match(line, commentRegex) then
         uncommentedLine = string.match(line, commentRegex)
         v.Buf:Replace(Loc(0, lineN), Loc(#line, lineN), GetLeadingWhitespace(line) .. uncommentedLine)
@@ -55,7 +51,11 @@ end
 function comment()
     local v = CurView()
     if v.Cursor:HasSelection() then
-        commentSelection(v.Cursor.CurSelection[1].Y, v.Cursor.CurSelection[2].Y)
+        if v.Cursor.CurSelection[1]:GreaterThan(-v.Cursor.CurSelection[2]) then
+            commentSelection(v.Cursor.CurSelection[2].Y, v.Cursor.CurSelection[1].Y)
+        else
+            commentSelection(v.Cursor.CurSelection[1].Y, v.Cursor.CurSelection[2].Y)
+        end
     else
         commentLine(v.Cursor.Y)
     end
