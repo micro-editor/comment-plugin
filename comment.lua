@@ -22,7 +22,7 @@ function onViewOpen(v)
         if ft[v.Buf.Settings["filetype"]] ~= nil then
             v.Buf.Settings["commenttype"] = ft[v.Buf.Settings["filetype"]]
         else
-            v.Buf.Settings["commenttype"] = "/* %s */"
+            v.Buf.Settings["commenttype"] = "# %s"
         end
     end
 end
@@ -32,12 +32,29 @@ function commentLine(lineN)
     local line = v.Buf:Line(lineN)
     local commentType = v.Buf.Settings["commenttype"]
     local commentRegex = "^%s*" .. commentType:gsub("%*", "%*"):gsub("%-", "%-"):gsub("%.", "%."):gsub("%+", "%+"):gsub("%[", "%["):gsub("%%s", "(.*)")
+    local index = string.find(commentType, "%%s") - 1
     if string.match(line, commentRegex) then
         uncommentedLine = string.match(line, commentRegex)
         v.Buf:Replace(Loc(0, lineN), Loc(#line, lineN), GetLeadingWhitespace(line) .. uncommentedLine)
+        if v.Buf.Cursor:HasSelection() then
+            if v.Buf.Cursor.CurSelection[1].Y == v.Buf.Cursor.CurSelection[2].Y then
+                v.Buf.Cursor.CurSelection[1].X = v.Buf.Cursor.CurSelection[1].X - index
+                v.Buf.Cursor.CurSelection[2].X = v.Buf.Cursor.CurSelection[2].X - index
+            end
+        else
+            v.Buf.Cursor.X = v.Buf.Cursor.X - index
+        end
     else
         local commentedLine = commentType:gsub("%%s", trim(line))
         v.Buf:Replace(Loc(0, lineN), Loc(#line, lineN), GetLeadingWhitespace(line) .. commentedLine)
+        if v.Buf.Cursor:HasSelection() then
+            if v.Buf.Cursor.CurSelection[1].Y == v.Buf.Cursor.CurSelection[2].Y then
+                v.Buf.Cursor.CurSelection[1].X = v.Buf.Cursor.CurSelection[1].X + index
+                v.Buf.Cursor.CurSelection[2].X = v.Buf.Cursor.CurSelection[2].X + index
+            end
+        else
+            v.Buf.Cursor.X = v.Buf.Cursor.X + index
+        end
     end
     v.Cursor:Relocate()
     v.Cursor.LastVisualX = v.Cursor:GetVisualX()
