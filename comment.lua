@@ -31,6 +31,9 @@ function commentLine(lineN)
     local v = CurView()
     local line = v.Buf:Line(lineN)
     local commentType = v.Buf.Settings["commenttype"]
+    if commentType == "" or not string.find(commentType, "%%s") then
+        return
+    end
     local commentRegex = "^%s*" .. commentType:gsub("%*", "%*"):gsub("%-", "%-"):gsub("%.", "%."):gsub("%+", "%+"):gsub("%[", "%["):gsub("%%s", "(.*)")
     local index = string.find(commentType, "%%s") - 1
     if string.match(line, commentRegex) then
