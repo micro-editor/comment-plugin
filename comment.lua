@@ -3,6 +3,7 @@ VERSION = "1.0.4"
 ft = {}
 
 ft["c"] = "// %s"
+ft["c++"] = "// %s"
 ft["go"] = "// %s"
 ft["python"] = "# %s"
 ft["python3"] = "# %s"
