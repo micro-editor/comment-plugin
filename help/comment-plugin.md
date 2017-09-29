@@ -36,6 +36,7 @@ but it is only available for certain filetypes:
 * ruby: `# %s`
 * d: `// %s`
 * swift: `// %s`
+* julia: `# %s`
 
 If your filetype is not available here, you can simply modify
 the `commenttype` option:
