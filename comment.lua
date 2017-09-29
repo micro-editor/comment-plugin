@@ -16,6 +16,7 @@ ft["javascript"] = "// %s"
 ft["ruby"] = "# %s"
 ft["d"] = "// %s"
 ft["swift"] = "// %s"
+ft["julia"] = "# %s"
 
 function onViewOpen(v)
     if v.Buf.Settings["commenttype"] == nil then
