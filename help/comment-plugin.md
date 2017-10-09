@@ -24,19 +24,22 @@ The comment type will be auto detected based on the filetype,
 but it is only available for certain filetypes:
 
 * c: `// %s`
+* c++: `// %s`
+* d: `// %s`
 * go: `// %s`
-* python: `# %s`
 * html: `<!-- %s -->`
 * java: `// %s`
+* javascript: `// %s`
+* julia: `# %s`
+* lua: `-- %s`
 * perl: `# %s`
+* php: `// %s`
+* python: `# %s`
+* python3: `# %s`
+* ruby: `# %s`
 * rust: `// %s`
 * shell: `# %s`
-* lua: `-- %s`
-* javascript: `// %s`
-* ruby: `# %s`
-* d: `// %s`
 * swift: `// %s`
-* julia: `# %s`
 
 If your filetype is not available here, you can simply modify
 the `commenttype` option:
