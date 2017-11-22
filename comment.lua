@@ -3,21 +3,24 @@ VERSION = "1.0.4"
 ft = {}
 
 ft["c"] = "// %s"
+ft["c++"] = "// %s"
 ft["css"] = "/* %s */"
 ft["d"] = "// %s"
 ft["go"] = "// %s"
 ft["html"] = "<!-- %s -->"
 ft["java"] = "// %s"
 ft["javascript"] = "// %s"
+ft["julia"] = "# %s"
 ft["less"] = "// %s"
 ft["lua"] = "-- %s"
 ft["perl"] = "# %s"
-ft["python3"] = "# %s"
+ft["php"] = "// %s"
 ft["python"] = "# %s"
+ft["python3"] = "# %s"
 ft["ruby"] = "# %s"
 ft["rust"] = "// %s"
 ft["shell"] = "# %s"
-ft["swift"] = "// %s
+ft["swift"] = "// %s"
 
 function onViewOpen(v)
     if v.Buf.Settings["commenttype"] == nil then
@@ -96,3 +99,4 @@ MakeCommand("comment", "comment.comment")
 BindKey("Alt-/", "comment.comment")
 
 AddRuntimeFile("comment", "help", "help/comment-plugin.md")
+
