@@ -5,7 +5,7 @@
   "Versions": [
     {
       "Version": "1.0.4",
-      "Url": "https://github.com/micro-editor/comment-plugin/archive/v1.0.4.zip",
+      "Url": "https://github.com/micro-editor/comment-plugin/archive/v1.0.5.zip",
       "Require": {
         "micro": ">=1.1.0"
       }
