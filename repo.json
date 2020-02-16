@@ -7,7 +7,7 @@
       "Version": "1.0.6",
       "Url": "https://github.com/micro-editor/comment-plugin/archive/v1.0.6.zip",
       "Require": {
-        "micro": ">=1.1.0"
+        "micro": ">=1.1.0 <2.0.0"
       }
     }
   ]
