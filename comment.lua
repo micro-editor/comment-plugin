@@ -104,7 +104,10 @@ function string.starts(String,Start)
     return string.sub(String,1,string.len(Start))==Start
 end
 
-MakeCommand("comment", "comment.comment")
-BindKey("Alt-/", "comment.comment")
+function init()
+    MakeCommand("comment", "comment.comment")
+    BindKey("Alt-/", "comment.comment")
 
-AddRuntimeFile("comment", "help", "help/comment-plugin.md")
+    AddRuntimeFile("comment", "help", "help/comment-plugin.md")
+end
+
