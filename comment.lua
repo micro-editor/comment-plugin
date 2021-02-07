@@ -21,6 +21,7 @@ ft["d"] = "// %s"
 ft["swift"] = "// %s"
 ft["julia"] = "# %s"
 ft["latex"] = "\% %s"
+ft["sql"] = "-- %s"
 
 function onViewOpen(v)
     if v.Buf.Settings["commenttype"] == nil then
